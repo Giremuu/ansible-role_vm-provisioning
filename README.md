@@ -1,4 +1,4 @@
-# Proxmox multiples VMs Provisioning with Ansible
+# Proxmox VMs Provisioning with Ansible
 
 [![CI](https://github.com/Giremuu/proxmox-vm-provisioning/actions/workflows/ci.yml/badge.svg)](https://github.com/Giremuu/proxmox-vm-provisioning/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
