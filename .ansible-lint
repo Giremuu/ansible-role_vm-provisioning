@@ -1,0 +1,17 @@
+---
+# Ansible linting rules
+# Checks: best practices, deprecated syntax, security issues, naming conventions, task formatting, idempotency patterns
+
+profile: production
+
+skip_list:
+  - name[casing]  # Allow flexible task naming (not only lowercase)
+  - yaml[line-length]  # Already handled by yamllint
+
+warn_list:
+  - experimental  # Warn on experimental features
+
+exclude_paths:
+  - .github/
+  - group_vars/vault.yml
+  - group_vars/all.yml

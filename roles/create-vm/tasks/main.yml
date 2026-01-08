@@ -1,0 +1,64 @@
+---
+- name: Get existing VMs info
+  community.proxmox.proxmox_vm_info:
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_ID }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    api_host: "{{ proxmox_host }}"
+    node: "{{ proxmox_node }}"
+  register: existing_vms
+
+- name: Clone VM from template
+  community.proxmox.proxmox_kvm:
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_ID }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    api_host: "{{ proxmox_host }}"
+    clone: debian-12-template
+    vmid: "{{ clone_id }}"
+    newid: "{{ item.vmid }}"
+    name: "{{ item.name }}"
+    node: "{{ proxmox_node }}"
+    storage: "{{ proxmox_storage }}"
+    format: raw
+    timeout: 300
+  register: clone_results
+  loop: "{{ vms }}"
+  when:
+    - item.state == "to_create"
+    - item.vmid not in existing_vms.proxmox_vms | map(attribute='vmid') | list
+
+- name: Configure cloud-init
+  community.proxmox.proxmox_kvm:
+    api_user: "{{ proxmox_user }}"
+    api_token_id: "{{ proxmox_token_ID }}"
+    api_token_secret: "{{ proxmox_token_secret }}"
+    api_host: "{{ proxmox_host }}"
+    node: "{{ proxmox_node }}"
+    vmid: "{{ item.vmid }}"
+    name: "{{ item.name }}"
+    cores: "{{ item.cores | default(1) }}"
+    memory: "{{ item.memory | default(1024) }}"
+    ipconfig:
+      ipconfig0: "ip={{ item.ip }}/{{ default_netmask }},gw={{ default_gateway }}"
+    nameservers: "{{ dns_servers }}"
+    update: true
+  loop: "{{ vms }}"
+  when:
+    - item.state == "to_create"
+    - item.vmid not in existing_vms.proxmox_vms | map(attribute='vmid') | list
+
+
+
+- name: Build created VMs list
+  ansible.builtin.set_fact:
+    created_vms: "{{ clone_results.results | selectattr('changed', 'equalto', true) | map(attribute='item.name') | list }}"
+    skipped_vms: "{{ clone_results.results | selectattr('skipped', 'defined') | map(attribute='item.name') | list }}"
+
+- name: Display provisioning summary
+  ansible.builtin.debug:
+    msg:
+      - "========================================"
+      - "VMs Created: {{ created_vms | join(', ') if created_vms else 'None' }}"
+      - "VMs Skipped: {{ skipped_vms | join(', ') if skipped_vms else 'None' }}"
+      - "========================================"

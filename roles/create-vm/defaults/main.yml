@@ -1,0 +1,9 @@
+---
+# Remember: These variables can be overridden in group_vars/all.yml or at playbook level
+
+# Template VMid to clone from
+clone_id: 200
+
+
+proxmox_storage: local-lvm
+proxmox_node: proxmox         # Where VMs will be created

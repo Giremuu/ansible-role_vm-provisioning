@@ -1,0 +1,16 @@
+---
+# Creates VMs by cloning from a template and configuring cloud-init parameters like IPs or DNS for exemple
+
+- name: Provision Proxmox VMs
+  hosts: localhost
+  gather_facts: false
+  
+  vars_files:
+    - ../group_vars/vault.yml
+    - ../group_vars/all.yml
+  
+  tags:
+    - create
+  
+  roles:
+    - create-vm

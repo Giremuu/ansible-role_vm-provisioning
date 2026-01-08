@@ -1,0 +1,19 @@
+---
+# YAML linting rules
+# Checks: indentation (2 spaces), line length (120 chars), truthy values, syntax validity
+
+extends: default    # Yamllint's default rules
+
+rules:              # Some changes for my repo
+  line-length:
+    max: 120
+    level: warning
+  
+  indentation:
+    spaces: 2
+  
+  truthy:
+    allowed-values: ['true', 'false']
+
+ignore: |
+  .github/

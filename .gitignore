@@ -1,0 +1,20 @@
+# Sensitive files
+group_vars/vault.yml
+group_vars/all.yml
+
+# Ansible retry files
+*.retry
+
+# Logs
+*.log
+
+# IDE files (Good practice about files polution)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+*.tmp

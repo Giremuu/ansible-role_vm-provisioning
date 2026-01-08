@@ -1,0 +1,37 @@
+---
+# Global network configuration
+default_gateway: 192.168.1.255
+default_netmask: 24
+dns_servers: "8.8.8.8,1.1.1.1"    # Google's and Cloudflare's DNS
+
+# State options: 'to_create' (will be provisioned) or 'created' (will be skipped)
+vms:
+  # Example: Web server
+  - name: vm-web01
+    vmid: 100
+    state: to_create
+    ip: 192.168.1.10
+    cores: 2
+    memory: 2048
+
+  # Example: Database server
+  - name: vm-db01
+    vmid: 101
+    state: to_create
+    ip: 192.168.1.11
+    cores: 4
+    memory: 4096
+
+  # Example: Already created VM (will be skipped with state)
+  - name: vm-prod01
+    vmid: 150
+    state: created
+    ip: 192.168.1.50
+    cores: 2
+    memory: 2048
+
+  # Example: Minimal VM (uses default 1 core / 1024MB)
+  - name: vm-test01
+    vmid: 102
+    state: to_create
+    ip: 192.168.1.12
