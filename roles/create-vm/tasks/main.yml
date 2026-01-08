@@ -7,6 +7,7 @@
     api_host: "{{ proxmox_host }}"
     node: "{{ proxmox_node }}"
   register: existing_vms
+
 - name: Clone VM from template
   community.proxmox.proxmox_kvm:
     api_user: "{{ proxmox_user }}"
@@ -26,6 +27,7 @@
   when:
     - item.state == "to_create"
     - item.vmid not in existing_vms.proxmox_vms | map(attribute='vmid') | list
+
 - name: Configure cloud-init
   community.proxmox.proxmox_kvm:
     api_user: "{{ proxmox_user }}"
@@ -45,6 +47,7 @@
   when:
     - item.state == "to_create"
     - item.vmid not in existing_vms.proxmox_vms | map(attribute='vmid') | list
+
 - name: Build created VMs list
   ansible.builtin.set_fact:
   created_vms: >-
@@ -53,6 +56,7 @@
       | map(attribute='item.name') 
       | list }}
     skipped_vms: "{{ clone_results.results | selectattr('skipped', 'defined') | map(attribute='item.name') | list }}"
+
 - name: Display provisioning summary
   ansible.builtin.debug:
     msg:
