@@ -50,11 +50,11 @@
 
 - name: Build created VMs list
   ansible.builtin.set_fact:
-  created_vms: >-
-    {{ clone_results.results
-      | selectattr('changed', 'equalto', true)
-      | map(attribute='item.name')
-      | list }}
+    created_vms: >-
+      {{ clone_results.results
+        | selectattr('changed', 'equalto', true)
+        | map(attribute='item.name')
+        | list }}
     skipped_vms: "{{ clone_results.results | selectattr('skipped', 'defined') | map(attribute='item.name') | list }}"
 
 - name: Display provisioning summary
