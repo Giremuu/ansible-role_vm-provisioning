@@ -52,10 +52,14 @@
   ansible.builtin.set_fact:
     created_vms: >-
       {{ clone_results.results
-        | selectattr('changed', 'equalto', true)
-        | map(attribute='item.name')
-        | list }}
-    skipped_vms: "{{ clone_results.results | selectattr('skipped', 'defined') | map(attribute='item.name') | list }}"
+         | selectattr('changed', 'equalto', true)
+         | map(attribute='item.name')
+         | list }}
+    skipped_vms: >-
+      {{ clone_results.results
+         | selectattr('skipped', 'defined')
+         | map(attribute='item.name')
+         | list }}
 
 - name: Display provisioning summary
   ansible.builtin.debug:
