@@ -1,8 +1,6 @@
 ---
-# Proxmox API creds
+# Remember: To create an API creds, go on Proxmox WebUI, in Datacenter > Permissions > API Tokens
 proxmox_user: user@pam
 proxmox_token_ID: ansible
 proxmox_token_secret: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 proxmox_host: 192.168.0.100
-
-# Remember: To create an API creds, go on Proxmox WebUI, in Datacenter > Permissions > API Tokens
