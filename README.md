@@ -1,6 +1,6 @@
 # Proxmox VMs Provisioning with Ansible
 
-[![CI](https://github.com/Giremuu/proxmox-vm-provisioning/actions/workflows/ci.yml/badge.svg)](https://github.com/Giremuu/proxmox-vm-provisioning/actions/workflows/ci.yml)
+[![CI](https://github.com/Giremuu/ansible-role_vm-provisioning/actions/workflows/ci.yml/badge.svg)](https://github.com/Giremuu/ansible-role_vm-provisioning/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Automated Proxmox multiple VM provisioning through template cloning with cloud-init configuration (IPs, DNS, cores...).
